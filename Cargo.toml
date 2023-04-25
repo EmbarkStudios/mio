@@ -36,8 +36,6 @@ os-poll = []
 # Enables additional OS specific extensions, e.g. Unix `pipe(2)`.
 os-ext = [
   "os-poll",
-  "windows-sys/Win32_System_Pipes",
-  "windows-sys/Win32_Security",
 ]
 # Enables `mio::net` module containing networking primitives.
 net = []
@@ -47,16 +45,6 @@ log = "0.4.8"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.121"
-
-[target.'cfg(windows)'.dependencies.windows-sys]
-version = "0.48"
-features = [
-  "Win32_Foundation",                 # Basic types eg HANDLE
-  "Win32_Networking_WinSock",         # winsock2 types/functions
-  "Win32_Storage_FileSystem",         # Enables NtCreateFile
-  "Win32_System_IO",                  # IO types like OVERLAPPED etc
-  "Win32_System_WindowsProgramming",  # General future used for various types/funcs
-]
 
 [target.'cfg(target_os = "wasi")'.dependencies]
 wasi = "0.11.0"

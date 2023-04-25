@@ -1,5 +1,7 @@
 mod afd;
 
+mod bindings;
+
 pub mod event;
 pub use event::{Event, Events};
 

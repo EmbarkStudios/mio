@@ -6,19 +6,12 @@ use std::sync::atomic::{AtomicBool, AtomicUsize};
 use std::sync::{Arc, Mutex};
 use std::{fmt, mem, slice};
 
-use windows_sys::Win32::Foundation::{
-    ERROR_BROKEN_PIPE, ERROR_IO_INCOMPLETE, ERROR_IO_PENDING, ERROR_NO_DATA, ERROR_PIPE_CONNECTED,
-    ERROR_PIPE_LISTENING, HANDLE, INVALID_HANDLE_VALUE,
-};
-use windows_sys::Win32::Storage::FileSystem::{
-    ReadFile, WriteFile, FILE_FLAG_FIRST_PIPE_INSTANCE, FILE_FLAG_OVERLAPPED, PIPE_ACCESS_DUPLEX,
-};
-use windows_sys::Win32::System::Pipes::{
-    ConnectNamedPipe, CreateNamedPipeW, DisconnectNamedPipe, PIPE_TYPE_BYTE,
-    PIPE_UNLIMITED_INSTANCES,
-};
-use windows_sys::Win32::System::IO::{
-    CancelIoEx, GetOverlappedResult, OVERLAPPED, OVERLAPPED_ENTRY,
+use crate::sys::windows::bindings::{
+    CancelIoEx, ConnectNamedPipe, CreateNamedPipeW, DisconnectNamedPipe, GetOverlappedResult,
+    ReadFile, WriteFile, ERROR_BROKEN_PIPE, ERROR_IO_INCOMPLETE, ERROR_IO_PENDING, ERROR_NO_DATA,
+    ERROR_PIPE_CONNECTED, ERROR_PIPE_LISTENING, FILE_FLAG_FIRST_PIPE_INSTANCE,
+    FILE_FLAG_OVERLAPPED, HANDLE, INVALID_HANDLE_VALUE, OVERLAPPED, OVERLAPPED_ENTRY,
+    PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE, PIPE_UNLIMITED_INSTANCES,
 };
 
 use crate::event::Source;

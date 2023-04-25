@@ -8,10 +8,9 @@ use std::mem;
 use std::os::windows::io::*;
 use std::time::Duration;
 
-use windows_sys::Win32::Foundation::{HANDLE, INVALID_HANDLE_VALUE};
-use windows_sys::Win32::System::IO::{
-    CreateIoCompletionPort, GetQueuedCompletionStatusEx, PostQueuedCompletionStatus, OVERLAPPED,
-    OVERLAPPED_ENTRY,
+use crate::sys::windows::bindings::{
+    CreateIoCompletionPort, GetQueuedCompletionStatusEx, PostQueuedCompletionStatus, HANDLE,
+    INVALID_HANDLE_VALUE, OVERLAPPED, OVERLAPPED_ENTRY,
 };
 
 /// A handle to an Windows I/O Completion Port.

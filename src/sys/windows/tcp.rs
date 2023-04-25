@@ -2,8 +2,7 @@ use std::io;
 use std::net::{self, SocketAddr};
 use std::os::windows::io::AsRawSocket;
 
-use windows_sys::Win32::Networking::WinSock::{self, SOCKET, SOCKET_ERROR, SOCK_STREAM};
-
+use crate::sys::windows::bindings::{self, SOCKET, SOCKET_ERROR, SOCK_STREAM};
 use crate::sys::windows::net::{new_ip_socket, socket_addr};
 
 pub(crate) fn new_for_addr(address: SocketAddr) -> io::Result<SOCKET> {
@@ -11,7 +10,7 @@ pub(crate) fn new_for_addr(address: SocketAddr) -> io::Result<SOCKET> {
 }
 
 pub(crate) fn bind(socket: &net::TcpListener, addr: SocketAddr) -> io::Result<()> {
-    use WinSock::bind;
+    use bindings::bind;
 
     let (raw_addr, raw_addr_length) = socket_addr(&addr);
     syscall!(
@@ -27,7 +26,7 @@ pub(crate) fn bind(socket: &net::TcpListener, addr: SocketAddr) -> io::Result<()
 }
 
 pub(crate) fn connect(socket: &net::TcpStream, addr: SocketAddr) -> io::Result<()> {
-    use WinSock::connect;
+    use bindings::connect;
 
     let (raw_addr, raw_addr_length) = socket_addr(&addr);
     let res = syscall!(
@@ -47,8 +46,8 @@ pub(crate) fn connect(socket: &net::TcpStream, addr: SocketAddr) -> io::Result<(
 }
 
 pub(crate) fn listen(socket: &net::TcpListener, backlog: u32) -> io::Result<()> {
+    use bindings::listen;
     use std::convert::TryInto;
-    use WinSock::listen;
 
     let backlog = backlog.try_into().unwrap_or(i32::max_value());
     syscall!(

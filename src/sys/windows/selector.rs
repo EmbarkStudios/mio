@@ -23,10 +23,9 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use windows_sys::Win32::Foundation::{
-    ERROR_INVALID_HANDLE, ERROR_IO_PENDING, HANDLE, STATUS_CANCELLED, WAIT_TIMEOUT,
+use crate::sys::windows::bindings::{
+    ERROR_INVALID_HANDLE, ERROR_IO_PENDING, HANDLE, OVERLAPPED, STATUS_CANCELLED, WAIT_TIMEOUT,
 };
-use windows_sys::Win32::System::IO::OVERLAPPED;
 
 #[derive(Debug)]
 struct AfdGroup {
@@ -536,7 +535,7 @@ cfg_io_source! {
     use std::mem::size_of;
     use std::ptr::null_mut;
 
-    use windows_sys::Win32::Networking::WinSock::{
+    use crate::sys::windows::bindings::{
         WSAGetLastError, WSAIoctl, SIO_BASE_HANDLE, SIO_BSP_HANDLE,
         SIO_BSP_HANDLE_POLL, SIO_BSP_HANDLE_SELECT, SOCKET_ERROR,
     };

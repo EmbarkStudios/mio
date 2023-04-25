@@ -3,7 +3,7 @@ use std::mem;
 use std::net::SocketAddr;
 use std::sync::Once;
 
-use windows_sys::Win32::Networking::WinSock::{
+use crate::sys::windows::bindings::{
     closesocket, ioctlsocket, socket, AF_INET, AF_INET6, FIONBIO, IN6_ADDR, IN6_ADDR_0,
     INVALID_SOCKET, IN_ADDR, IN_ADDR_0, SOCKADDR, SOCKADDR_IN, SOCKADDR_IN6, SOCKADDR_IN6_0,
     SOCKET,
